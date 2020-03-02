@@ -1,0 +1,93 @@
+{ config, pkgs, ... }:
+
+{
+  nix.maxJobs = 4;
+
+  # boot = {};
+
+  sound.mediaKeys.enable = true; # enable volume control buttons
+
+  # networking.hostName = "vatti.px.io";
+  # networking.hostId = "27c27c92";
+  # networking.nameservers = [ "1.1.1.1" "8.8.8.8" "8.8.4.4" ];
+  # networking.dhcpcd.enable = false;
+  # networking.enableIPv6 = false;
+  # networking.useDHCP = false;
+
+  i18n = {
+       inputMethod.enabled = uim;
+  };
+
+  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+
+  time.timeZone = "Asia/Shanghai";
+
+  programs = {
+    # Enable Bash completion for all interactive bash shells.
+    bash.enableCompletion = true;
+  };
+
+  nixpkgs.config = { allowBroken = true; allowUnfree = true; }
+
+  # List packages installed in system profile. To search, run:
+  # \$ nix search wget
+  #
+  # The set of packages that appear in
+  # /run/current-system/sw.
+  # These packages are automatically available to all users, and are automatically updated every time you rebuild the system configuration.
+  # (The latter is the main difference with installing them in the default profile,
+  # /nix/var/nix/profiles/default.
+  environment.systemPackages = with pkgs; [
+    curl
+    wget
+    vim
+    emacs
+    git
+    w3m
+    dmenu
+    tmux
+    gnupg
+    google-chrome
+    lua
+    aspell
+    html-tidy
+    imagemagick
+    zip unzip gnutar
+    nodejs
+    xsel xclip
+    cmake clang
+    pandoc
+    gnumake
+    universal-ctags global ripgrep
+    libreoffice
+    sdcv
+    sbcl
+    ffmpeg
+    python3
+    fortune
+    typespeed
+    languagetool
+    python.pkgs.setuptools 
+    python.pkgs.pip
+    python3.pkgs.pip
+    python.pkgs.percol
+    python.pkgs.jsbeautifier
+    python.pkgs.jedi
+    python.pkgs.flake8
+    davmail
+    popfile #分捡邮件
+    erlang
+    chromium
+    zsh
+  ];
+
+  nix.trustedUsers = ["root" "demo" ];
+  system.autoUpgrade.enable = true;
+
+  # This value determines the NixOS release with which your system is to be
+  # compatible, in order to avoid breaking some software such as database
+  # servers. You should change this only after NixOS release notes say you
+  # should.
+  system.stateVersion = "19.09"; # Did you read the comment?
+}
