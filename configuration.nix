@@ -11,7 +11,7 @@
 # Machine / Settings / Shared Folders.
   fileSystems."/mnt" = {
     fsType = "vboxsf";
-    device = "vatti";
+    device = "nameofdevicetomount";
     options = [ "rw" ];
   };
 
@@ -26,7 +26,9 @@
 # services.xserver.desktopManager.gnome3.enable = true;
 
 # Set your time zone.
-# time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "Asia/Shanghai";
+
+  nixpkgs.config = { allowBroken = true; allowUnfree = true; }
 
 # List packages installed in system profile. To search, run:
 # \$ nix search wget

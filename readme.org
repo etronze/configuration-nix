@@ -1,0 +1,18 @@
+* The Key File
+/etc/nixos/configuration.nix
+
+* The Key File Path e.g.
+# /nix/var/nix/profiles/per-user/root/channels/nixos/
+
+- <nixpkgs/nixos/modules/installer/virtualbox-demo.nix>
+  /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/installer/virtualbox-demo.nix
+
+# /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/config/users-groups.nix
+* 'virtualbox-demo' esolve
+main configuration flle
+** virtualbox-image.nix
+** channel.nix
+** demo.nix
+** clone-config.nix
+* virtualbox system
+Linux 2.6 / 3.x / 4.x (64-bit)
