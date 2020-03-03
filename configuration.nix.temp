@@ -3,14 +3,39 @@
 {
   nix.maxJobs = 4;
 
-  # boot = {};
+  # FIXME: UUID detection is currently broken
+  boot.loader.grub.fsIdentifier = "provided";
+
+  # Add some more video drivers to give X11 a shot at working in
+  # VMware and QEMU.
+  # services.xserver.videoDrivers = mkOverride 40 [ "virtualbox" "vmware" "cirrus" "vesa" "modesetting" ];
 
   sound.mediaKeys.enable = true; # enable volume control buttons
 
-  # networking.hostName = "vatti.px.io";
-  # networking.hostId = "27c27c92"; // vatti
-  # networking.hostId = "94cbfba5"; // t460p
-  # networking.hostId = "7ca60493"; // c2402
+  powerManagement.enable = false;
+  system.stateVersion = mkDefault "18.03";
+
+  # Let demo build as a trusted user.
+  # nix.trustedUsers = [ "demo" ];
+
+  # fileSystems."/mnt" = {
+  #   fsType = "vboxsf";
+  #   device = "nameofdevicetomount";
+  #   options = [ "rw" ];
+  # };
+
+  # By default, the NixOS VirtualBox demo image includes SDDM and Plasma.
+  # If you prefer another desktop manager or display manager, you may want
+  # to disable the default.
+  # services.xserver.desktopManager.plasma5.enable = lib.mkForce false;
+  # services.xserver.displayManager.sddm.enable = lib.mkForce false;
+
+  # Enable GDM/GNOME by uncommenting above two lines and two lines below.
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome3.enable = true;
+
+  # networking.hostName = "gopal.px.io";
+  # networking.hostId = "7ca60493";
   # networking.nameservers = [ "1.1.1.1" "8.8.8.8" "8.8.4.4" ];
   # networking.dhcpcd.enable = false;
   # networking.enableIPv6 = false;
@@ -20,17 +45,9 @@
        inputMethod.enabled = uim;
   };
 
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-
   time.timeZone = "Asia/Shanghai";
 
-  programs = {
-    # Enable Bash completion for all interactive bash shells.
-    bash.enableCompletion = true;
-  };
-
-  nixpkgs.config = { allowBroken = true; allowUnfree = true; }
+  nixpkgs.config = { allowBroken = true; allowUnfree = true; };
 
   # List packages installed in system profile. To search, run:
   # \$ nix search wget
@@ -83,13 +100,4 @@
     chromium
     zsh
   ];
-
-  nix.trustedUsers = ["root" "demo" ];
-  system.autoUpgrade.enable = true;
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "19.09"; # Did you read the comment?
 }

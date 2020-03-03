@@ -3,16 +3,122 @@
 
 * The Key File Path e.g.
 # /nix/var/nix/profiles/per-user/root/channels/nixos/
-
 - <nixpkgs/nixos/modules/installer/virtualbox-demo.nix>
-  /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/installer/virtualbox-demo.nix
-
 # /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/config/users-groups.nix
 * 'virtualbox-demo' esolve
-main configuration flle
+/nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/installer/virtualbox-demo.nix
+
+  # FIXME: UUID detection is currently broken
+  boot.loader.grub.fsIdentifier = "provided";
+
+  # Allow mounting of shared folders.
+  users.users.demo.extraGroups = [ "vboxsf" ];
+
+  # Add some more video drivers to give X11 a shot at working in
+  # VMware and QEMU.
+  services.xserver.videoDrivers = mkOverride 40 [ "virtualbox" "vmware" "cirrus" "vesa" "modesetting" ];
+
+  powerManagement.enable = false;
+  system.stateVersion = mkDefault "18.03";
+
+  installer.cloneConfigExtra = ''
+  # Let demo build as a trusted user.
+  # nix.trustedUsers = [ "demo" ];
+
+  # Mount a VirtualBox shared folder.
+  # This is configurable in the VirtualBox menu at
+  # Machine / Settings / Shared Folders.
+  # fileSystems."/mnt" = {
+  #   fsType = "vboxsf";
+  #   device = "nameofdevicetomount";
+  #   options = [ "rw" ];
+  # };
+
+  # By default, the NixOS VirtualBox demo image includes SDDM and Plasma.
+  # If you prefer another desktop manager or display manager, you may want
+  # to disable the default.
+  # services.xserver.desktopManager.plasma5.enable = lib.mkForce false;
+  # services.xserver.displayManager.sddm.enable = lib.mkForce false;
+
+  # Enable GDM/GNOME by uncommenting above two lines and two lines below.
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome3.enable = true;
+
+  # Set your time zone.
+  # time.timeZone = "Europe/Amsterdam";
+
+  # List packages installed in system profile. To search, run:
+  # \$ nix search wget
+  # environment.systemPackages = with pkgs; [
+  #   wget vim
+  # ];
+
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
+  '';
 ** virtualbox-image.nix
 ** channel.nix
 ** demo.nix
+  users.users.demo =
+    { isNormalUser = true;
+      description = "Demo user account";
+      extraGroups = [ "wheel" ];
+      password = "demo";
+      uid = 1000;
+    };
+
+  services.xserver.displayManager.sddm.autoLogin = {
+    enable = true;
+    relogin = true;
+    user = "demo";
+  };
 ** clone-config.nix
+** graphical.nix
+  services.xserver = {
+    enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5 = {
+      enable = true;
+      enableQt4Support = false;
+    };
+    libinput.enable = true; # for touchpad support on many laptops
+  };
+
+  # Enable sound in virtualbox appliances.
+  hardware.pulseaudio.enable = true;
+
+  environment.systemPackages = [ pkgs.glxinfo pkgs.firefox ];
 * virtualbox system
 Linux 2.6 / 3.x / 4.x (64-bit)
+sudo -i
+
+Note! Ignore "Information: You may need to update /etc/fstab"
+  # parted /dev/sda -- mklabel gpt
+  # parted /dev/sda -- mkpart primary 512MiB -8GiB
+  # parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+  # parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
+  # parted /dev/sda -- set 3 boot on
+
+# mkfs.ext4 -L nixos /dev/sda1
+# mkswap -L swap /dev/sda2
+# swapon /dev/sda2
+# mkfs.fat -F 32 -n boot /dev/sda3        # (for UEFI systems only)
+# mount /dev/disk/by-label/nixos /mnt
+# mkdir -p /mnt/boot                      # (for UEFI systems only)
+# mount /dev/disk/by-label/boot /mnt/boot # (for UEFI systems only)
+# nixos-generate-config --root /mnt
+# vim /mnt/etc/nixos/configuration.nix
+# nixos-install
+# reboot
+
+# vim /mnt/etc/nixos/configuration.nix
+# nixos-rebuild switch
+
+** .nix
+  imports = [ <nixpkgs/nixos/modules/installer/virtualbox-demo.nix> ];
+
+  fileSystems."/mnt" = {
+    fsType = "vboxsf";
+    device = "nameofdevicetomount";
+    options = [ "rw" ];
+  };
