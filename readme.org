@@ -5,6 +5,8 @@
 # /nix/var/nix/profiles/per-user/root/channels/nixos/
 - <nixpkgs/nixos/modules/installer/virtualbox-demo.nix>
 # /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/config/users-groups.nix
+* nixos-help
+file:///nix/store/m7b0gbnj9ppkwjnhc1s1iv2wbbmg2wrq-nixos-manual-html/share/doc/nixos/index.html
 * 'virtualbox-demo' esolve
 /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/installer/virtualbox-demo.nix
 
@@ -93,11 +95,16 @@ Linux 2.6 / 3.x / 4.x (64-bit)
 sudo -i
 
 Note! Ignore "Information: You may need to update /etc/fstab"
-  # parted /dev/sda -- mklabel gpt
-  # parted /dev/sda -- mkpart primary 512MiB -8GiB
-  # parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
-  # parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
-  # parted /dev/sda -- set 3 boot on
+- MBR
+  parted /dev/sda -- mklabel msdos
+  parted /dev/sda -- mkpart primary 1MiB -8GiB
+  parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+- UEFI
+  parted /dev/sda -- mklabel gpt
+  parted /dev/sda -- mkpart primary 512MiB -8GiB
+  parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+  parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
+  parted /dev/sda -- set 3 boot on
 
 # mkfs.ext4 -L nixos /dev/sda1
 # mkswap -L swap /dev/sda2
@@ -109,7 +116,8 @@ Note! Ignore "Information: You may need to update /etc/fstab"
 # nixos-generate-config --root /mnt
 # vim /mnt/etc/nixos/configuration.nix
 # nixos-install
-# reboot
+# poweroff
+# Remove startup disk
 
 # vim /mnt/etc/nixos/configuration.nix
 # nixos-rebuild switch
