@@ -6,7 +6,6 @@
 - <nixpkgs/nixos/modules/installer/virtualbox-demo.nix>
 # /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/config/users-groups.nix
 * nixos-help
-file:///nix/store/m7b0gbnj9ppkwjnhc1s1iv2wbbmg2wrq-nixos-manual-html/share/doc/nixos/index.html
 * 'virtualbox-demo' esolve
 /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/nixos/modules/installer/virtualbox-demo.nix
 
