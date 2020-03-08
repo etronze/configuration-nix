@@ -10,8 +10,6 @@
       ./hardware-configuration.nix
     ];
 
-  nix.maxJobs = 4;
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -60,7 +58,47 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
     environment.systemPackages = with pkgs; [
-    wget vim emacs git w3m google-chrome zsh
+    curl
+    wget
+    vim
+    emacs
+    git
+    w3m
+    dmenu
+    tmux
+    gnupg
+    google-chrome
+    lua
+    aspell
+    html-tidy
+    imagemagick
+    zip unzip
+    gnutar
+    nodejs
+    xsel xclip
+    cmake clang
+    pandoc
+    gnumake
+    universal-ctags global ripgrep
+    libreoffice
+    sdcv
+    sbcl
+    ffmpeg
+    python3
+    fortune
+    typespeed
+    languagetool
+    python.pkgs.setuptools
+    python.pkgs.pip
+    # python.pkgs.percol
+    python.pkgs.jsbeautifier
+    python.pkgs.jedi
+    python.pkgs.flake8
+    davmail
+    popfile
+    erlang
+    zsh 
+    evince
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -90,6 +128,7 @@
   # services.xserver.enable = true;
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
+  services.xserver.xkbOptions = "ctrl:swapescape";
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
@@ -100,6 +139,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.etron = {
+    password = "etron";
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
   };
