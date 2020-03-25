@@ -99,6 +99,8 @@
     erlang
     zsh 
     evince
+    docker
+    gnutls
     mplayer
   ];
 
