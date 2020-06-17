@@ -90,14 +90,18 @@
     python.pkgs.setuptools 
     python.pkgs.pip
     python3.pkgs.pip
-    python.pkgs.percol
+    # python.pkgs.percol
     python.pkgs.jsbeautifier
     python.pkgs.jedi
     python.pkgs.flake8
     davmail
     popfile #分捡邮件
     erlang
-    chromium
+    # chromium
     zsh
+    automake
+    libtool
+    autoconf
+    gcc
   ];
 }

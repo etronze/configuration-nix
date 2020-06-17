@@ -31,7 +31,47 @@
 # List packages installed in system profile. To search, run:
 # \$ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim
+    wget
+    vim
+    emacs
+    git
+    w3m
+    lua
+    aspell
+    html-tidy
+    imagemagick
+    zip unzip gnutar
+    nodejs
+    xsel xclip
+    cmake clang
+    pandoc
+    gnumake
+    universal-ctags global ripgrep
+    libreoffice
+    sdcv
+    sbcl
+    ffmpeg
+    python3
+    fortune
+    typespeed
+    languagetool
+    python.pkgs.setuptools 
+    python.pkgs.pip
+    python3.pkgs.pip
+    # python.pkgs.percol
+    python.pkgs.jsbeautifier
+    python.pkgs.jedi
+    python.pkgs.flake8
+    davmail
+    popfile #分捡邮件
+    erlang
+    chromium
+    zsh
+    gnumake
+    automake
+    libtool
+    autoconf
+    gcc
   ];
 
 # Enable the OpenSSH daemon.

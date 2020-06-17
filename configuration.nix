@@ -72,8 +72,7 @@
     aspell
     html-tidy
     imagemagick
-    zip unzip
-    gnutar
+    zip unzip gnutar
     nodejs
     xsel xclip
     cmake clang
@@ -95,13 +94,18 @@
     python.pkgs.jedi
     python.pkgs.flake8
     davmail
-    popfile
+    popfile #分捡邮件
     erlang
+    # chromium
     zsh 
     evince
     docker
     gnutls
     mplayer
+    automake
+    libtool
+    autoconf
+    gcc
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
