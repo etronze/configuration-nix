@@ -48,6 +48,7 @@
     google-chrome
     lua
     aspell
+    aspellDicts.en
     html-tidy
     imagemagick
     zip unzip gnutar

@@ -1,6 +1,6 @@
 * The Key File
 /etc/nixos/configuration.nix
-
+/nix/store/6jq0g7pcvrwn3y1yn2s8jjmc1626xak5-nixos-19.09.2518.8260cd5bc65/nixos/nixos/modules/module-list.nix
 * The Key File Path e.g.
 # /nix/var/nix/profiles/per-user/root/channels/nixos/
 - <nixpkgs/nixos/modules/installer/virtualbox-demo.nix>
