@@ -121,6 +121,11 @@ Note! Ignore "Information: You may need to update /etc/fstab"
 # vim /mnt/etc/nixos/configuration.nix
 # nixos-rebuild switch
 
+nix-env -qaP '.*pip.*'
+nix-env -i python3.7-pip-19.2.3
+$ nix-env -qaP \*
+$ nix-env -f '<nixpkgs>' -iA w3m
+$ nix-env -e thunderbird 
 ** .nix
   imports = [ <nixpkgs/nixos/modules/installer/virtualbox-demo.nix> ];
 

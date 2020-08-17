@@ -11,7 +11,7 @@
 # Machine / Settings / Shared Folders.
   fileSystems."/mnt" = {
     fsType = "vboxsf";
-    device = "nameofdevicetomount";
+    device = "E_DRIVE";
     options = [ "rw" ];
   };
 
@@ -28,14 +28,24 @@
 # Set your time zone.
   time.timeZone = "Asia/Shanghai";
 
+  nixpkgs.config = {
+    allowBroken = true; allowUnfree = true;
+    permittedInsecurePackages = ["google-chrome-81.0.4044.138"];
+  };
+
 # List packages installed in system profile. To search, run:
 # \$ nix search wget
   environment.systemPackages = with pkgs; [
+    curl
     wget
     vim
     emacs
     git
     w3m
+    dmenu
+    tmux
+    gnupg
+    google-chrome
     lua
     aspell
     html-tidy
@@ -65,18 +75,21 @@
     davmail
     popfile #分捡邮件
     erlang
-    chromium
+    # chromium
     zsh
-    gnumake
+    evince
+    docker
+    gnutls
+    mplayer
     automake
     libtool
     autoconf
     gcc
+    glibc
+    gnum4
+    binutils
   ];
 
 # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
-  nixpkgs.config.allowBroken = true;
-  nixpkgs.config.allowUnfree = true;
 }
